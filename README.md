@@ -22,5 +22,5 @@ Facilitate direct communication between buyers and sellers through the in-app ch
 **Payment Integration**  
 ShopSync supports secure payment gateways, making transactions safe and hassle-free for buyers and sellers. Users can choose from multiple payment options, including credit/debit cards, digital wallets, and more.
 
-**Product and Shop Reviews**
+**Product and Shop Reviews**  
 Buyers can leave feedback and ratings for products and shops, helping other users make informed decisions. Sellers can respond to reviews, fostering transparency and building trust.
