@@ -24,3 +24,11 @@ ShopSync supports secure payment gateways, making transactions safe and hassle-f
 
 **Product and Shop Reviews**  
 Buyers can leave feedback and ratings for products and shops, helping other users make informed decisions. Sellers can respond to reviews, fostering transparency and building trust.
+# Screenshots
+**Homepage**  ![Alt Text](Homepage.png)  
+**Product Details**  ![Alt Text](Product.png)  
+**Seller Dashboard**  ![Alt Text](DashBoard.png)  
+**Seller Profile**  ![Alt Text](Profile.png)  
+**Payment Integration**  ![Alt Text](Payment.png)  
+**Order Details**  ![Alt Text](Order.png)
+
