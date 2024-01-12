@@ -13,9 +13,13 @@ const { isAuthenticated, isAdmin } = require("../middleware/auth");
 router.post("/create-user", async (req, res, next) => {
   try {
     const { name, email, password, avatar } = req.body;
+
+    console.log("Received request to create user:", { name, email, password, avatar });
+
     const userEmail = await User.findOne({ email });
 
     if (userEmail) {
+      console.log("User already exists:", email);
       return next(new ErrorHandler("User already exists", 400));
     }
 
@@ -24,37 +28,61 @@ router.post("/create-user", async (req, res, next) => {
     });
 
     const user = {
-      name: name,
-      email: email,
-      password: password,
+      name,
+      email,
+      password,
       avatar: {
         public_id: myCloud.public_id,
         url: myCloud.secure_url,
       },
     };
 
+    console.log("Creating user with data:", user);
+
     const activationToken = createActivationToken(user);
 
     const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    const nodemailer = require('nodemailer');
 
+    // Create a nodemailer transporter with your SMTP configuration
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'mayurikothari299@gmail.com',
+        pass: 'wdwl rldj iwng dcix', // Using App Password for Gmail
+      },
+    });
+    
+ 
+    
     try {
       await sendMail({
         email: user.email,
         subject: "Activate your account",
         message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
       });
+
+      console.log("Activation email sent successfully to:", user.email);
+
       res.status(201).json({
         success: true,
-        message: `please check your email:- ${user.email} to activate your account!`,
+        message: `Please check your email: ${user.email} to activate your account!`,
       });
-      toast.success(`Please check your email: ${user.email} to activate your account!`);
+      
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      console.error("Error sending activation email:", error);
+      return next(new ErrorHandler(`Error sending activation email: ${error.message}`, 500));
     }
   } catch (error) {
-    return next(new ErrorHandler(error.message, 400));
+    console.error("Error creating user:", error);
+    return next(new ErrorHandler(`Error creating user: ${error.message}`, 500));
   }
 });
+
+
+
+
+
 
 // create activation token
 const createActivationToken = (user) => {
